@@ -1,11 +1,11 @@
 package com.example.firstSpringApp;
 
-public class User {
+public class UserDAO {
     private String userId;
     private String userName;
     private int number;
 
-    public User() {
+    public UserDAO() {
     }
 
     @Override
@@ -16,7 +16,7 @@ public class User {
                 ", number=" + number +
                 '}';
     }
-    public User(String userId, String userName, int number) {
+    public UserDAO(String userId, String userName, int number) {
         this.userId = userId;
         this.userName = userName;
         this.number = number;

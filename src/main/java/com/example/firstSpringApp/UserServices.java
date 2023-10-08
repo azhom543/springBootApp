@@ -1,22 +1,24 @@
 package com.example.firstSpringApp;
 
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class UserServices {
 
-    private final List<User> users;
+    private final List<UserDAO> users;
 
-    public UserServices(List<User> users) {
+    public UserServices(List<UserDAO> users) {
         this.users = users;
     }
-
-    public List<User> getAllUsers() {
+    public List<UserDAO> getAllUsers() {
         return users;
     }
 
-    public User getUserById(int id) {
+    public UserDAO getUserById(int id) {
         if (id >= 1 && id <= users.size()) {
             return users.get(id - 1);
         } else {
@@ -24,14 +26,14 @@ public class UserServices {
         }
     }
 
-    public List<User> addUser(User user) {
+    public List<UserDAO> addUser(UserDAO user) {
         users.add(user);
         return users;
     }
 
-    public List<User> updateUser(int id, User user) {
+    public List<UserDAO> updateUser(int id, UserDAO user) {
         if (id >= 1 && id <= users.size()) {
-            User existingUser = users.get(id - 1);
+            UserDAO existingUser = users.get(id - 1);
             existingUser.setUserName(user.getUserName());
             return users;
         } else {
@@ -39,7 +41,7 @@ public class UserServices {
         }
     }
 
-    public List<User> deleteUser(int id) {
+    public List<UserDAO> deleteUser(int id) {
         if (id >= 1 && id <= users.size()) {
             users.remove(id - 1);
             return users;
