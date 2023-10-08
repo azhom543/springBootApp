@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -16,29 +14,29 @@ public class UserController {
     public UserController(UserServices userService) {
         this.userService = userService;
     }
-    @GetMapping("/hello")
-    public List<UserDAO> getUsers() {
+    @GetMapping("/user-management/users")
+    public List<UserEntity> getUsers() {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/hello/{id}")
-    public ResponseEntity<UserDAO> getUserById(@PathVariable int id) {
-        UserDAO user = userService.getUserById(id);
+    @GetMapping("/user-management/users/{id}/action=get")
+    public ResponseEntity<UserEntity> getUserById(@PathVariable int id) {
+        UserEntity user = userService.getUserById(id);
         return ResponseEntity.ok(user);
     }
 
-    @PostMapping("/add/user")
-    public ResponseEntity<List<UserDAO>> addUser(@RequestBody UserDAO user) {
+    @PostMapping("/user-management/status/action=add")
+    public ResponseEntity<List<UserEntity>> addUser(@RequestBody UserEntity user) {
         return ResponseEntity.ok(userService.addUser(user));
     }
 
-    @PutMapping("/update/user/{id}")
-    public ResponseEntity<List<UserDAO>> updateUser(@PathVariable int id, @RequestBody UserDAO user) {
+    @PutMapping("/user-management/users/{id}/status/action=update")
+    public ResponseEntity<List<UserEntity>> updateUser(@PathVariable int id, @RequestBody UserEntity user) {
         return ResponseEntity.ok(userService.updateUser(id, user));
     }
 
-    @DeleteMapping("/delete/user/{id}")
-    public ResponseEntity<List<UserDAO>> deleteUser(@PathVariable int id) {
+    @DeleteMapping("/user-management/users/{id}/status/action=delete")
+    public ResponseEntity<List<UserEntity>> deleteUser(@PathVariable int id) {
         return ResponseEntity.ok(userService.deleteUser(id));
     }
 }

@@ -2,23 +2,21 @@ package com.example.firstSpringApp;
 
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class UserServices {
 
-    private final List<UserDAO> users;
+    private final List<UserEntity> users;
 
-    public UserServices(List<UserDAO> users) {
+    public UserServices(List<UserEntity> users) {
         this.users = users;
     }
-    public List<UserDAO> getAllUsers() {
+    public List<UserEntity> getAllUsers() {
         return users;
     }
 
-    public UserDAO getUserById(int id) {
+    public UserEntity getUserById(int id) {
         if (id >= 1 && id <= users.size()) {
             return users.get(id - 1);
         } else {
@@ -26,14 +24,14 @@ public class UserServices {
         }
     }
 
-    public List<UserDAO> addUser(UserDAO user) {
+    public List<UserEntity> addUser(UserEntity user) {
         users.add(user);
         return users;
     }
 
-    public List<UserDAO> updateUser(int id, UserDAO user) {
+    public List<UserEntity> updateUser(int id, UserEntity user) {
         if (id >= 1 && id <= users.size()) {
-            UserDAO existingUser = users.get(id - 1);
+            UserEntity existingUser = users.get(id - 1);
             existingUser.setUserName(user.getUserName());
             return users;
         } else {
@@ -41,7 +39,7 @@ public class UserServices {
         }
     }
 
-    public List<UserDAO> deleteUser(int id) {
+    public List<UserEntity> deleteUser(int id) {
         if (id >= 1 && id <= users.size()) {
             users.remove(id - 1);
             return users;

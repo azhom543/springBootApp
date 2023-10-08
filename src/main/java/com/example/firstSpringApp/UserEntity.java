@@ -1,11 +1,11 @@
 package com.example.firstSpringApp;
 
-public class UserDAO {
+public class UserEntity {
     private String userId;
     private String userName;
     private int number;
 
-    public UserDAO() {
+    public UserEntity() {
     }
 
     @Override
@@ -16,7 +16,7 @@ public class UserDAO {
                 ", number=" + number +
                 '}';
     }
-    public UserDAO(String userId, String userName, int number) {
+    public UserEntity(String userId, String userName, int number) {
         this.userId = userId;
         this.userName = userName;
         this.number = number;
