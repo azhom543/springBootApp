@@ -2,6 +2,7 @@ package com.example.firstSpringApp.controller;
 
 import com.example.firstSpringApp.dto.User;
 import com.example.firstSpringApp.services.UserServices;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class UserController {
     }
 
     @PostMapping("/status/action=add")
-    public ResponseEntity<List<User>> addUser(@RequestBody User user) {
+    public ResponseEntity<List<User>> addUser(@RequestBody @Valid User user) {
         return ResponseEntity.ok(userService.addUser(user));
     }
 

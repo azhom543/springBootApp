@@ -1,8 +1,23 @@
 package com.example.firstSpringApp.dto;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+
 public class User {
+    @Valid
+
+    @NotNull(message = "User ID should not be null")
     private String userId;
+    @Size(min = 3,max = 10,message = "User Name must be between 5 and 10")
     private String userName;
+    @Valid
+    @Min(value = 1)
+    @Max(value = 1000000)
     private int number;
 
     public User() {
