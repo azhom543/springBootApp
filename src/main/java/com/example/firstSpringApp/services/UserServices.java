@@ -1,5 +1,6 @@
-package com.example.firstSpringApp;
+package com.example.firstSpringApp.services;
 
+import com.example.firstSpringApp.dto.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -7,16 +8,18 @@ import java.util.List;
 @Service
 public class UserServices {
 
-    private final List<UserEntity> users;
+    private List<User> users;
 
-    public UserServices(List<UserEntity> users) {
+    public UserServices(List<User> users) {
         this.users = users;
+//        users.add(new User("458","adham",456));
+//        users.add(new User("89989","ahmed",125));
     }
-    public List<UserEntity> getAllUsers() {
+    public List<User> getAllUsers() {
         return users;
     }
 
-    public UserEntity getUserById(int id) {
+    public User getUserById(int id) {
         if (id >= 1 && id <= users.size()) {
             return users.get(id - 1);
         } else {
@@ -24,14 +27,14 @@ public class UserServices {
         }
     }
 
-    public List<UserEntity> addUser(UserEntity user) {
+    public List<User> addUser(User user) {
         users.add(user);
         return users;
     }
 
-    public List<UserEntity> updateUser(int id, UserEntity user) {
+    public List<User> updateUser(int id, User user) {
         if (id >= 1 && id <= users.size()) {
-            UserEntity existingUser = users.get(id - 1);
+            User existingUser = users.get(id - 1);
             existingUser.setUserName(user.getUserName());
             return users;
         } else {
@@ -39,7 +42,7 @@ public class UserServices {
         }
     }
 
-    public List<UserEntity> deleteUser(int id) {
+    public List<User> deleteUser(int id) {
         if (id >= 1 && id <= users.size()) {
             users.remove(id - 1);
             return users;

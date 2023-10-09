@@ -1,11 +1,11 @@
-package com.example.firstSpringApp;
+package com.example.firstSpringApp.dto;
 
-public class UserEntity {
+public class User {
     private String userId;
     private String userName;
     private int number;
 
-    public UserEntity() {
+    public User() {
     }
 
     @Override
@@ -16,7 +16,7 @@ public class UserEntity {
                 ", number=" + number +
                 '}';
     }
-    public UserEntity(String userId, String userName, int number) {
+    public User(String userId, String userName, int number) {
         this.userId = userId;
         this.userName = userName;
         this.number = number;
