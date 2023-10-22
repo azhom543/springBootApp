@@ -1,5 +1,6 @@
 package hibernateSpringApp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -37,7 +38,7 @@ public class Courses {
     @ManyToOne
     @JoinColumn(name = "instructor_id")
     private Instructor instructor;
-
+    @JsonIgnore
     @ManyToMany(mappedBy = "coursesSet",cascade = CascadeType.ALL)
     private Set<Students> studentsSet = new HashSet<>();
     public void addStudent(Students student) {

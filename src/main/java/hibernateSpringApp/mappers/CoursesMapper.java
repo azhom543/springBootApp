@@ -1,14 +1,20 @@
 package hibernateSpringApp.mappers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import hibernateSpringApp.dtos.CoursesDTO;
 import hibernateSpringApp.entities.Courses;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class CoursesMapper {
-    public static CoursesDTO mapToDTO(Courses courses){
-        return new CoursesDTO(courses.getCourse_id(),courses.getCourse_name(),courses.getStart_date(),courses.getEnd_date(),courses.getLevel(),courses.is_started(),courses.getInstructor(),courses.getStudentsSet());
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    public Courses toEntity(CoursesDTO dto){
+        return objectMapper.convertValue(dto,Courses.class);
     }
-    public static Courses mapToEntity(CoursesDTO coursesDTO){
-        if (coursesDTO == null){
-            return null;
-        }else return new Courses(coursesDTO.getCourse_id(),coursesDTO.getCourse_name(),coursesDTO.getStart_date(),coursesDTO.getEnd_date(),coursesDTO.getLevel(),coursesDTO.isIs_started(),coursesDTO.getInstructor(),coursesDTO.getStudentsSet());
-    }
+
+    public CoursesDTO toDTO(Courses entity){return objectMapper.convertValue(entity,CoursesDTO.class);}
+
 }
