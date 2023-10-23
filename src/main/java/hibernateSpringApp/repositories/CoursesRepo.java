@@ -11,7 +11,7 @@ import java.util.UUID;
 @Repository
 public interface CoursesRepo extends JpaRepository<Courses, UUID> {
     @Query("SELECT c.course_name, i.first_name||' '|| i.last_name FROM Courses c JOIN c.instructor i")
-    List<CourseAndInstructorNamesDTO> getCourseNameAndInstructorNames();
+    List<Object[]> getCourseNameAndInstructorNames();
     @Query("SELECT i.first_name||' '|| i.last_name ,s.firstName||' '|| s.lastName ,c.course_id  FROM Courses c JOIN c.instructor i JOIN studentsSet s")
     List<Object[]> getInstructorCoursesStudents();
 }
