@@ -1,5 +1,6 @@
 package hibernateSpringApp.services;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,8 +14,20 @@ class CalculatorTest {
         assertEquals(4,calculator.add(2,2));
     }
     @Test
+    public void testAddThrow(){
+        Assertions.assertThrows(ArithmeticException.class,()->calculator.add(2,0));
+    }
+    @Test
     public void testSubtraction(){
         assertEquals(0,calculator.subtract(2,2));
+    }
+    @Test
+    public void testSubtractionThrow(){
+        assertThrows(ArithmeticException.class,() -> calculator.subtract(2,5));
+    }
+    @Test
+    public void testMultiplicationThrow(){
+        assertThrows(ArithmeticException.class,() -> calculator.multiply(3,0));
     }
     @Test
     public void testMultiplication(){
@@ -24,4 +37,9 @@ class CalculatorTest {
     public void testDivision(){
         assertEquals(5,calculator.divide(25,5));
     }
+    @Test
+    public void testDivisionThrow(){
+        assertThrows(ArithmeticException.class,() -> calculator.divide(25,0));
+    }
+
 }
