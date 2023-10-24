@@ -1,5 +1,6 @@
 package hibernateSpringApp.services;
 
+import hibernateSpringApp.dtos.StudentsCoursesInfoDTO;
 import hibernateSpringApp.entities.Instructor;
 import hibernateSpringApp.entities.Students;
 import hibernateSpringApp.repositories.StudentsRepo;
@@ -36,8 +37,8 @@ public class StudentsService {
         studentsRepo.deleteById(studentID);
         return studentsRepo.findAll();
     }
-    public List<Object[]> getStudentCourseInfo(){
+    public List<StudentsCoursesInfoDTO> getStudentCourseInfo(){
         return studentsRepo.getStudentCourseInfo();
     }
-    public List<Object[]> getStudentsCourseLevel(){return studentsRepo.getStudentsCourseByLevel();}
+    public List<StudentsCoursesInfoDTO> getStudentsCourseLevel(){return studentsRepo.getStudentsCourseByLevel();}
 }

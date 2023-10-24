@@ -1,5 +1,6 @@
 package hibernateSpringApp.controller;
 
+import hibernateSpringApp.dtos.StudentsCoursesInfoDTO;
 import hibernateSpringApp.dtos.StudentsDTO;
 import hibernateSpringApp.entities.Instructor;
 import hibernateSpringApp.entities.Students;
@@ -65,11 +66,11 @@ public class StudentsController {
                 .collect(Collectors.toList()));
     }
     @GetMapping("/student-course-info")
-    public ResponseEntity<List<Object[]>> getStudentCourseInfo(){
+    public ResponseEntity<List<StudentsCoursesInfoDTO>> getStudentCourseInfo(){
         return ResponseEntity.ok(studentsService.getStudentCourseInfo());
     }
     @GetMapping("/student-course-level")
-    public ResponseEntity<List<Object[]>> getStudentsCourseByLevel(){
+    public ResponseEntity<List<StudentsCoursesInfoDTO>> getStudentsCourseByLevel(){
         return ResponseEntity.ok(studentsService.getStudentsCourseLevel());
     }
 }

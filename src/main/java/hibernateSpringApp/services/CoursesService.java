@@ -1,5 +1,7 @@
 package hibernateSpringApp.services;
 
+import hibernateSpringApp.dtos.CourseInstructorDTO;
+import hibernateSpringApp.dtos.InstructorCoursesStudentsDTO;
 import hibernateSpringApp.repositories.CoursesRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,8 +34,9 @@ public class CoursesService {
         coursesRepo.deleteById(courseID);
         return coursesRepo.findAll();
     }
-    public List<Object[]> getCourseNameAndInstructorNames() {
+    public List<CourseInstructorDTO> getCourseNameAndInstructorNames() {
         return coursesRepo.getCourseNameAndInstructorNames();
     }
-    public List<Object[]> getInstructorCoursesStudents(){return coursesRepo.getInstructorCoursesStudents();}
+    public List<InstructorCoursesStudentsDTO> getInstructorCoursesStudents(){return coursesRepo.getInstructorCoursesStudents();}
+    public List<Courses> getCoursesByInstructorName(String instructorName){return coursesRepo.findByInstructorFirstName(instructorName);}
 }

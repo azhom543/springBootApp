@@ -1,9 +1,10 @@
 package hibernateSpringApp.controller;
 
+import hibernateSpringApp.dtos.CourseInstructorDTO;
 import hibernateSpringApp.dtos.CoursesDTO;
+import hibernateSpringApp.dtos.InstructorCoursesStudentsDTO;
 import hibernateSpringApp.entities.Courses;
 import hibernateSpringApp.mappers.CoursesMapper;
-import hibernateSpringApp.mappers.InstructorMapper;
 import hibernateSpringApp.services.CoursesService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class CoursesController {
                 .collect(Collectors.toList());
     }
     @GetMapping("/courses/{courseId}")
-    public ResponseEntity<CoursesDTO> getAllCourses(UUID courseId) {
+    public ResponseEntity<CoursesDTO> getAllCourses(@PathVariable UUID courseId) {
         Courses course = coursesService.getCourseById(courseId);
         if (course == null){
             return ResponseEntity.notFound().build();
@@ -60,11 +61,15 @@ public class CoursesController {
                 .collect(Collectors.toList()));
     }
     @GetMapping("/course-names-and-instructors")
-    public List<Object[]> getCourseNameAndInstructorNames() {
+    public List<CourseInstructorDTO> getCourseNameAndInstructorNames() {
         return coursesService.getCourseNameAndInstructorNames();
     }
-    @GetMapping("/4th-join")
-    public List<Object[]> getInstructorCoursesStudents() {
+    @GetMapping("/instructor-courses-students")
+    public List<InstructorCoursesStudentsDTO> getInstructorCoursesStudents() {
         return coursesService.getInstructorCoursesStudents();
+    }
+    @GetMapping("/{instructorName}")
+    public List<Courses> getCoursesByInstructor(@PathVariable String instructorName) {
+        return coursesService.getCoursesByInstructorName(instructorName);
     }
 }

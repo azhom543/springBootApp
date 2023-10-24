@@ -20,7 +20,7 @@ public class Instructor {
     @Column(name = "instructor_id")
     private UUID id;
     @Column(name = "first_name")
-    private String first_name;
+    private String firstName;
     @Column(name = "last_name")
     private String last_name;
     @Column(name = "email")
