@@ -2,6 +2,7 @@ package hibernateSpringApp.controller;
 
 import hibernateSpringApp.dtos.CourseInstructorDTO;
 import hibernateSpringApp.dtos.CoursesDTO;
+import hibernateSpringApp.dtos.InstructorCoursesDTO;
 import hibernateSpringApp.dtos.InstructorCoursesStudentsDTO;
 import hibernateSpringApp.entities.Courses;
 import hibernateSpringApp.mappers.CoursesMapper;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -67,6 +70,23 @@ public class CoursesController {
     @GetMapping("/instructor-courses-students")
     public List<InstructorCoursesStudentsDTO> getInstructorCoursesStudents() {
         return coursesService.getInstructorCoursesStudents();
+    }
+    @GetMapping("/instructor-courses")
+    public ResponseEntity<List<InstructorCoursesDTO>> getInstructorsAndTheirCourses() {
+        List<Object[]> results = coursesService.getInstructorCourses();
+        List<InstructorCoursesDTO> dtos = new ArrayList<>();
+
+        for (Object[] result : results) {
+            String instructorName = (String) result[0];
+            String courses = (String) result[1]; // Courses as a comma-separated string
+
+            List<String> courseList = Arrays.asList(courses.split(", "));
+
+            InstructorCoursesDTO dto = new InstructorCoursesDTO(instructorName, courseList);
+            dtos.add(dto);
+        }
+
+        return ResponseEntity.ok(dtos);
     }
     @GetMapping("/{instructorName}")
     public List<Courses> getCoursesByInstructor(@PathVariable String instructorName) {
