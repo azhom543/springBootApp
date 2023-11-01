@@ -8,6 +8,7 @@ import hibernateSpringApp.mappers.InstructorMapper;
 import hibernateSpringApp.services.InstructorService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,12 +40,10 @@ public class InstructorsController {
         return ResponseEntity.ok(instructorMapper.toDTO(instructor));
     }
     @PostMapping("/action=add")
-    public ResponseEntity<List<InstructorDTO>> addInstructor(@RequestBody @Valid InstructorDTO instructorDTO) {
+    public ResponseEntity<InstructorDTO> addInstructor(@RequestBody @Valid InstructorDTO instructorDTO) {
         Instructor instructorEntity = instructorMapper.toEntity(instructorDTO);
-        List<Instructor> instructorsList  = instructorService.addInstructor(instructorEntity);
-        return ResponseEntity.ok(instructorsList.stream()
-                .map(instructorMapper::toDTO)
-                .collect(Collectors.toList()));
+        InstructorDTO instructordto  = instructorMapper.toDTO(instructorService.addInstructor(instructorEntity));
+        return ResponseEntity.ok(instructordto);
     }
     @PutMapping("/action=update")
     public ResponseEntity<InstructorDTO> updateInstructor(@RequestBody @Valid InstructorDTO instructor) {
@@ -56,14 +55,10 @@ public class InstructorsController {
         return ResponseEntity.ok(instructorMapper.toDTO(instructorService.updateInstructor(searchInstructor)));
     }
     @DeleteMapping("/action=delete/{InstructorID}")
-    public ResponseEntity<List<InstructorDTO>> deleteInstructor(@PathVariable @Valid UUID instructorID) {
-        Instructor instructor = instructorService.getInstructorById(instructorID);
-        if (instructor == null) {
+    public ResponseEntity deleteInstructor(@PathVariable @Valid UUID instructorID) {
+        boolean found = instructorService.deleteInstructor(instructorID);
+        if (!found) {
             return ResponseEntity.notFound().build();
-        }
-        List<Instructor> instructorList = instructorService.deleteInstructor(instructorID);
-        return ResponseEntity.ok(instructorList.stream()
-                .map(instructorMapper::toDTO)
-                .collect(Collectors.toList()));
+        }else return new ResponseEntity<>("Instructor deleted successfully", HttpStatus.OK);
     }
 }

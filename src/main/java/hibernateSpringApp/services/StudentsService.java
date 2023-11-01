@@ -25,17 +25,20 @@ public class StudentsService {
         Optional<Students> student = studentsRepo.findById(studentID);
         return student.orElse(null);
     }
-    public List<Students> addStudent(Students student){
-        studentsRepo.save(student);
-        return studentsRepo.findAll();
+    public Students addStudent(Students student){
+        return studentsRepo.save(student);
     }
     public Students updateStudent(Students student){
         studentsRepo.save(student);
         return student;
     }
-    public List<Students> deleteStudent(UUID studentID){
-        studentsRepo.deleteById(studentID);
-        return studentsRepo.findAll();
+    public boolean deleteStudent(UUID studentID){
+        if (studentsRepo.existsById(studentID)) {
+            studentsRepo.deleteById(studentID);
+            return true;
+        } else {
+            return false;
+        }
     }
     public List<StudentsCoursesInfoDTO> getStudentCourseInfo(){
         return studentsRepo.getStudentCourseInfo();

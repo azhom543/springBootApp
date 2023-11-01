@@ -7,10 +7,11 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-//@AllArgsConstructor
-@NoArgsConstructor
 @ToString
 @Entity
 @Table(name = "instructor")
@@ -22,7 +23,7 @@ public class Instructor {
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
-    private String last_name;
+    private String lastName;
     @Column(name = "email")
     private String email;
     @Column(name = "phone_number")

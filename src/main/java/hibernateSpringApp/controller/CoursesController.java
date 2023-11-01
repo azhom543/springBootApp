@@ -41,12 +41,10 @@ public class CoursesController {
         return ResponseEntity.ok(coursesMapper.toDTO(course));
     }
     @PostMapping("/action=add")
-    public ResponseEntity<List<CoursesDTO>> addCourse(@RequestBody @Valid CoursesDTO course) {
+    public ResponseEntity<CoursesDTO> addCourse(@RequestBody @Valid CoursesDTO course) {
         Courses courseEntity = coursesMapper.toEntity(course);
-        List<Courses> coursesList = coursesService.addCourse(courseEntity);
-        return ResponseEntity.ok(coursesList.stream()
-                .map(coursesMapper::toDTO)
-                .collect(Collectors.toList()));
+        CoursesDTO courseAdded = coursesMapper.toDTO(coursesService.addCourse(courseEntity));
+        return ResponseEntity.ok(courseAdded);
     }
     @PutMapping("/action=update")
     public ResponseEntity<CoursesDTO> updateCourse(@RequestBody @Valid CoursesDTO course) {
@@ -57,11 +55,11 @@ public class CoursesController {
         return ResponseEntity.ok(coursesMapper.toDTO(coursesService.updateCourse(coursesEntity)));
     }
     @DeleteMapping("/action=delete/{courseID}")
-    public ResponseEntity<List<CoursesDTO>> deleteCourse(@RequestBody @Valid UUID courseID) {
-        List<Courses> coursesList = coursesService.deleteCourse(courseID);
-        return ResponseEntity.ok(coursesList.stream()
-                .map(coursesMapper::toDTO)
-                .collect(Collectors.toList()));
+    public ResponseEntity deleteCourse(@RequestBody @Valid UUID courseID) {
+        boolean found = coursesService.deleteCourse(courseID);
+        if (!found) {
+            return ResponseEntity.notFound().build();
+        }else return ResponseEntity.ok().build();
     }
     @GetMapping("/course-names-and-instructors")
     public List<CourseInstructorDTO> getCourseNameAndInstructorNames() {

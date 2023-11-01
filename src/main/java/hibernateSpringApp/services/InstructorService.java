@@ -24,16 +24,20 @@ public class InstructorService {
         Optional<Instructor> instructor = instructorRepo.findById(id);
         return instructor.orElse(null);
     }
-    public List<Instructor> addInstructor(Instructor instructor){
-        instructorRepo.save(instructor);
-        return instructorRepo.findAll();
+    public Instructor addInstructor(Instructor instructor){
+        return instructorRepo.save(instructor);
     }
     public Instructor updateInstructor(Instructor instructor){
         instructorRepo.save(instructor);
         return instructor;
     }
-    public List<Instructor> deleteInstructor(UUID instructorID){
-        instructorRepo.deleteById(instructorID);
-        return instructorRepo.findAll();
+    public boolean deleteInstructor(UUID instructorId) {
+        // Check if the instructor with the given ID exists
+        if (instructorRepo.existsById(instructorId)) {
+            instructorRepo.deleteById(instructorId);
+            return true; // Instructor deleted successfully
+        } else {
+            return false; // Instructor with the given ID does not exist
+        }
     }
 }

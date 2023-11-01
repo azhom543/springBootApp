@@ -23,17 +23,20 @@ public class CoursesService {
         Optional<Courses> coursesOptional = coursesRepo.findById(id);
         return coursesOptional.orElse(null);
     }
-    public List<Courses> addCourse(Courses courses){
-        coursesRepo.save(courses);
-        return coursesRepo.findAll();
+    public Courses addCourse(Courses courses){
+        return coursesRepo.save(courses);
     }
     public Courses updateCourse(Courses course){
         coursesRepo.save(course);
         return course;
     }
-    public List<Courses> deleteCourse(UUID courseID){
-        coursesRepo.deleteById(courseID);
-        return coursesRepo.findAll();
+    public boolean deleteCourse(UUID courseID){
+        if (coursesRepo.existsById(courseID)) {
+            coursesRepo.deleteById(courseID);
+            return true;
+        } else {
+            return false;
+        }
     }
     public List<CourseInstructorDTO> getCourseNameAndInstructorNames() {
         return coursesRepo.getCourseNameAndInstructorNames();

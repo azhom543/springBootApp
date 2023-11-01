@@ -39,12 +39,10 @@ public class StudentsController {
         return ResponseEntity.ok(studentsMapper.toDTO(student));
     }
     @PostMapping("/action=add")
-    public ResponseEntity<List<StudentsDTO>> addStudent(@RequestBody @Valid StudentsDTO student) {
+    public ResponseEntity<StudentsDTO> addStudent(@RequestBody @Valid StudentsDTO student) {
         Students studentEntity = studentsMapper.toEntity(student);
-        List<Students> studentsList = studentsService.addStudent(studentEntity);
-        return ResponseEntity.ok(studentsList.stream()
-                .map(studentsMapper::toDTO)
-                .collect(Collectors.toList()));
+        StudentsDTO studentAdded = studentsMapper.toDTO(studentsService.addStudent(studentEntity));
+        return ResponseEntity.ok(studentAdded);
     }
     @PutMapping("/action=update")
     public ResponseEntity<StudentsDTO> updateIStudent(@RequestBody @Valid StudentsDTO student) {
@@ -55,15 +53,11 @@ public class StudentsController {
         return ResponseEntity.ok(studentsMapper.toDTO(studentsService.updateStudent(studentEntity)));
     }
     @DeleteMapping("/action=delete/{id}")
-    public ResponseEntity<List<StudentsDTO>> deleteStudent(@RequestParam @Valid UUID studentID) {
-        Students student = studentsService.getStudentByID(studentID);
-        if (student == null) {
+    public ResponseEntity deleteStudent(@RequestParam @Valid UUID studentID) {
+        boolean found = studentsService.deleteStudent(studentID);
+        if (!found) {
             return ResponseEntity.notFound().build();
-        }
-        List<Students> studentsList = studentsService.deleteStudent(studentID);
-        return ResponseEntity.ok(studentsList.stream()
-                .map(studentsMapper::toDTO)
-                .collect(Collectors.toList()));
+        }else return ResponseEntity.ok().build();
     }
     @GetMapping("/student-course-info")
     public ResponseEntity<List<StudentsCoursesInfoDTO>> getStudentCourseInfo(){

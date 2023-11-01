@@ -12,9 +12,9 @@ import java.util.UUID;
 
 @Repository
 public interface CoursesRepo extends JpaRepository<Courses, UUID> {
-    @Query("SELECT NEW hibernateSpringApp.dtos.CourseInstructorDTO(c.course_name, i.firstName || ' ' || i.last_name) FROM Courses c JOIN c.instructor i")
+    @Query("SELECT NEW hibernateSpringApp.dtos.CourseInstructorDTO(c.course_name, i.firstName || ' ' || i.lastName) FROM Courses c JOIN c.instructor i")
     List<CourseInstructorDTO> getCourseNameAndInstructorNames();
-    @Query("SELECT NEW hibernateSpringApp.dtos.InstructorCoursesStudentsDTO(i.firstName||' '|| i.last_name ,s.firstName||' '|| s.lastName ,c.course_id)  FROM Courses c JOIN c.instructor i JOIN studentsSet s")
+    @Query("SELECT NEW hibernateSpringApp.dtos.InstructorCoursesStudentsDTO(i.firstName||' '|| i.lastName ,s.firstName||' '|| s.lastName ,c.course_id)  FROM Courses c JOIN c.instructor i JOIN studentsSet s")
     List<InstructorCoursesStudentsDTO> getInstructorCoursesStudents();
     @Query(nativeQuery = true, value = "SELECT i.first_name || ' ' || i.last_name AS instructor_name, " +
             "string_agg(c.course_name, ', ') AS course_names " +

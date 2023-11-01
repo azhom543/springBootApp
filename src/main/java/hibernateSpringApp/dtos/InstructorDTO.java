@@ -14,8 +14,8 @@ import java.util.UUID;
 
 public class InstructorDTO {
     private UUID id;
-    private String first_name;
-    private String last_name;
+    private String firstName;
+    private String lastName;
     private String email;
     private String phone;
     private String title;
