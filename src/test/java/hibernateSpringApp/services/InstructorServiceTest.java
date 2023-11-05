@@ -26,7 +26,8 @@ class InstructorServiceTest {
     InstructorRepo instructorRepo;
     @InjectMocks
     InstructorService instructorService;
-
+    @Mock
+    InstructorValidationService instructorValidationService;
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -71,13 +72,21 @@ class InstructorServiceTest {
     public void testAddInstructor() {
         // Arrange
         Instructor instructorToAdd = new Instructor();
+        instructorToAdd.setPhone("1234567890");
+        instructorToAdd.setEmail("john.doe123@example.com");
 
+        doReturn(true).when(instructorValidationService).doesEmailValidWrapper("john.doe123@example.com");
+        doReturn(false).when(instructorValidationService).doesPhoneNumberExistWrapper("1234567890");
+//        when(instructorValidationService.doesPhoneNumberExistWrapper("1234567890")).thenReturn(false); // Mock the behavior to return false
         when(instructorRepo.save(instructorToAdd)).thenReturn(instructorToAdd);
 
-        //Act
+        // Act
         Instructor addedInstructor = instructorService.addInstructor(instructorToAdd);
 
-        // Verify that the repository method was called
+
+        // Verify that save was called
+        verify(instructorValidationService, times(1)).doesEmailValidWrapper("john.doe123@example.com");
+        verify(instructorValidationService, times(1)).doesPhoneNumberExistWrapper("1234567890");
         verify(instructorRepo, times(1)).save(instructorToAdd);
 
         // Assert
@@ -88,12 +97,19 @@ class InstructorServiceTest {
     void updateInstructor() {
         //Arrange
         Instructor instructorToUpdate = new Instructor();
+        instructorToUpdate.setPhone("1234567890");
+        instructorToUpdate.setEmail("john.doe123@example.com");
+
+        doReturn(true).when(instructorValidationService).doesEmailValidWrapper("john.doe123@example.com");
+        doReturn(false).when(instructorValidationService).doesPhoneNumberExistWrapper("1234567890");
         when(instructorRepo.save(instructorToUpdate)).thenReturn(instructorToUpdate);
 
         //Act
         Instructor updatedInstructor = instructorService.updateInstructor(instructorToUpdate);
 
         // Verify that the repository method was called
+        verify(instructorValidationService, times(1)).doesEmailValidWrapper("john.doe123@example.com");
+        verify(instructorValidationService, times(1)).doesPhoneNumberExistWrapper("1234567890");
         verify(instructorRepo, times(1)).save(instructorToUpdate);
 
         // Assert

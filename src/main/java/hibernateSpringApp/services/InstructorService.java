@@ -16,6 +16,8 @@ import java.util.UUID;
 public class InstructorService {
     @Autowired
     private InstructorRepo instructorRepo;
+    @Autowired
+    private InstructorValidationService instructorValidationService;
 
     public List<Instructor> getAllInstructor(){
         return instructorRepo.findAll();
@@ -25,11 +27,18 @@ public class InstructorService {
         return instructor.orElse(null);
     }
     public Instructor addInstructor(Instructor instructor){
-        return instructorRepo.save(instructor);
+        if(!instructorValidationService.doesPhoneNumberExistWrapper(instructor.getPhone()) && instructorValidationService.doesEmailValidWrapper(instructor.getEmail())){
+            return instructorRepo.save(instructor);
+        }else
+            throw new RuntimeException("Error Email is not Valid or Phone number already exists");
     }
     public Instructor updateInstructor(Instructor instructor){
-        instructorRepo.save(instructor);
-        return instructor;
+        if(!instructorValidationService.doesPhoneNumberExistWrapper(instructor.getPhone()) && instructorValidationService.doesEmailValidWrapper(instructor.getEmail())){
+            instructorRepo.save(instructor);
+            return instructor;
+        }else
+            throw new RuntimeException("Error Email is not Valid or Phone number already exists");
+
     }
     public boolean deleteInstructor(UUID instructorId) {
         // Check if the instructor with the given ID exists
