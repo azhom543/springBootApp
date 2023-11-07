@@ -5,7 +5,9 @@ import hibernateSpringApp.entities.Instructor;
 import hibernateSpringApp.entities.InstructorDetails;
 import hibernateSpringApp.entities.Students;
 import hibernateSpringApp.repositories.InstructorRepo;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +21,7 @@ public class InstructorService {
     @Autowired
     private InstructorValidationService instructorValidationService;
 
+    @Cacheable("instructorCache")
     public List<Instructor> getAllInstructor(){
         return instructorRepo.findAll();
     }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,7 +16,7 @@ import java.util.UUID;
 @ToString
 @Entity
 @Table(name = "courses")
-public class Courses {
+public class Courses implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID) // Use an appropriate strategy for your database
     @Column(name = "course_id")

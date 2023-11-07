@@ -2,6 +2,8 @@ package hibernateSpringApp.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -13,7 +15,7 @@ import java.util.UUID;
 @ToString
 @Entity
 @Table(name = "students")
-public class Students {
+public class Students implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "student_id")
